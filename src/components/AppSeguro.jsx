@@ -1,4 +1,5 @@
 import React from "react";
+import useCotizador from "../hooks/useCotizador";
 import Formulario from "./Formulario";
 
 function AppSeguro() {
