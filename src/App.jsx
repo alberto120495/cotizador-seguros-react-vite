@@ -1,10 +1,10 @@
 import { useState } from "react";
+import AppSeguro from "./components/AppSeguro";
 
 function App() {
-  console.log("Hola");
   return (
     <div className="App">
-      <h1>Hola</h1>
+      <AppSeguro />
     </div>
   );
 }
