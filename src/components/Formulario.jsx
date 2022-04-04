@@ -1,9 +1,26 @@
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { MARCAS, YEARS, PLANES } from "../constants";
+import useCotizador from "../hooks/useCotizador";
+import Error from "./Error";
 function Formulario() {
+  const { handleChangeDatos, datos, error, setError, cotizarSeguro } =
+    useCotizador();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (Object.values(datos).includes("")) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+    setError("");
+    cotizarSeguro();
+  };
+
   return (
     <>
-      <form>
+      {error && <Error />}
+
+      <form onSubmit={handleSubmit}>
         <div className="my-5">
           <label
             htmlFor=""
@@ -15,6 +32,8 @@ function Formulario() {
             name="marca"
             id=""
             className="w-full p-3 bg-white border border-gray-200 outline-none"
+            value={datos.marca}
+            onChange={(e) => handleChangeDatos(e)}
           >
             <option value="">--Seleciona Marca--</option>
             {MARCAS.map((marca) => (
@@ -33,9 +52,11 @@ function Formulario() {
             Año
           </label>
           <select
-            name="marca"
+            name="year"
             id=""
             className="w-full p-3 bg-white border border-gray-200 outline-none"
+            value={datos.year}
+            onChange={(e) => handleChangeDatos(e)}
           >
             <option value="">--Seleciona un Año--</option>
 
@@ -59,7 +80,13 @@ function Formulario() {
             {PLANES.map((plan) => (
               <Fragment key={plan.id}>
                 <label htmlFor="">{plan.nombre}</label>
-                <input type="radio" name="plan" value={plan.id} />
+
+                <input
+                  type="radio"
+                  name="plan"
+                  value={plan.id}
+                  onChange={(e) => handleChangeDatos(e)}
+                />
               </Fragment>
             ))}
           </div>
